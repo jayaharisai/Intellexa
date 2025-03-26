@@ -3,7 +3,7 @@ from qdrant_client.models import Distance, VectorParams, PointStruct, Filter, Fi
 import uuid
 
 
-client = QdrantClient(url="http://localhost:6333")
+client = QdrantClient(url="http://qdrant:6333")
 
 
 def create_collection(collection_name: str):
