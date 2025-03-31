@@ -3,3 +3,5 @@ uvicorn
 requests
 qdrant-client
 openai
+PyJWT
+python-multipart
