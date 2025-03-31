@@ -1,3 +1,5 @@
 # RAGFusion
 
-![Project Screenshot](./frontend/src/img/logo.svg)
+
+<img src="./frontend/src/img/logo.svg" alt="Project Screenshot" width="1000"/>
+
