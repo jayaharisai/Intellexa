@@ -343,3 +343,167 @@ body{
 transform: scale(1.05);
     transition: 300ms;
 }
+
+
+.selectable {
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .selectable.selected {
+    background-color: rgba(66, 97, 147, 0.133);
+    border-radius: 5px;
+    
+  }
+  
+  .selectable.highlighted {
+    border-color: #ffffff; /* White border on hover */
+  }
+  
+
+
+  .knowledgebase.blurred {
+    filter: blur(8px); /* Apply blur effect to the entire page */
+    pointer-events: none; /* Disable interaction with the blurred content */
+  }
+  
+  .modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+  
+  .modal {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+    max-width: 400px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .modal button {
+    margin-top: 15px;
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .modal button:hover {
+    background-color: #45a049;
+  }
+
+
+.upload.disabled {
+background-color: rgba(0, 0, 0, 0.1); /* Slightly dim the background */
+pointer-events: none; /* Prevent interactions */
+opacity: 0.5; /* Make the section look disabled */
+}
+
+.upload.disabled label {
+cursor: not-allowed; /* Change cursor to indicate no interaction */
+}
+
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4); /* Semi-transparent dark background */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    backdrop-filter: blur(10px); /* Add glass effect with blur */
+    -webkit-backdrop-filter: blur(10px); /* For Safari support */
+  }
+  
+  .modal {
+    background: rgba(255, 255, 255, 0.7); /* White with some transparency */
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Optional shadow to add depth */
+    width: 400px; /* Adjust width as needed */
+  }
+
+
+.chats{
+    /* background-color: #00C480; */
+    width: 53%;
+    margin: auto;
+    padding: 0px 10px;
+    margin-top: 130px;
+    height: 580px;
+    overflow-y: auto;
+}
+
+.chats ul{
+    padding: 0px;
+    list-style: none;
+}
+
+.user-message{
+    font-size: 14px;
+    color: rgb(185, 185, 185);
+    margin-top: 30px;
+}
+
+.ai-message{
+    color: white;
+    font-size: 12px;
+    font-weight: 300;
+    background-color: rgba(57, 57, 57, 0.226);
+    padding: 20px;
+    border-radius: 0px 30px 30px 30px;
+    margin-top: 10px;
+}
+
+.chats {
+    overflow-y: auto;
+    scrollbar-width: none; /* Firefox */
+  }
+  
+  .chats::-webkit-scrollbar {
+    display: none; /* Chrome, Safari */
+  }
+
+
+  .monitoring-container {
+    @apply min-h-screen bg-gray-100 dark:bg-gray-900 p-6 text-gray-800 dark:text-gray-100 transition-all;
+  }
+  
+  .kpi-card {
+    @apply bg-white dark:bg-gray-800 shadow-md rounded-xl p-4 transition-all duration-300;
+  }
+  
+  .chart-card {
+    @apply bg-white dark:bg-gray-800 shadow-lg rounded-2xl p-6 transition-all duration-300;
+  }
+  
+  .chart-title {
+    @apply text-xl font-semibold mb-4;
+  }
+  
+  .kpi-label {
+    @apply text-sm text-gray-500 dark:text-gray-400;
+  }
+  
+  .kpi-value {
+    @apply text-2xl font-bold;
+  }
+  
+  .refresh-note {
+    @apply text-xs text-right text-gray-500 italic mt-4;
+  }

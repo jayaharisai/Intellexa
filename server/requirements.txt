@@ -5,3 +5,6 @@ qdrant-client
 openai
 PyJWT
 python-multipart
+pypdf
+langchain_community
+langchain_openai

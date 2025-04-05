@@ -3,17 +3,21 @@ import { motion } from 'framer-motion';
 import MainNavBar from './MainNavBar';
 import axios from 'axios';
 import { toast, ToastContainer } from 'react-toastify';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate for redirection
 import 'react-toastify/dist/ReactToastify.css';
 
 function KnowledgeBase() {
   const [files, setFiles] = useState([]);
   const [uploadProgress, setUploadProgress] = useState(0);
   const [dragging, setDragging] = useState(false);
-
+  const [openAIConfigured, setOpenAIConfigured] = useState(true); // Track if OpenAI key is set
+  const [showModal, setShowModal] = useState(false); // Track if modal should be shown
   const token = localStorage.getItem('authToken'); // Fetch auth token
+  const navigate = useNavigate(); // Use navigate for redirection
 
   useEffect(() => {
     fetchUploadedFiles();
+    checkOpenAIKey(); // Check OpenAI key when component mounts
   }, []);
 
   const fetchUploadedFiles = async () => {
@@ -29,6 +33,20 @@ function KnowledgeBase() {
     }
   };
 
+  // Check if OpenAI key is configured
+  const checkOpenAIKey = async () => {
+    try {
+      const response = await axios.get(`http://127.0.0.1:8000/configuration?token=${token}`);
+      if (!response.data.success || !response.data.configuration.openai_key) {
+        setOpenAIConfigured(false); // OpenAI key is not configured
+        setShowModal(true); // Show modal to configure the key
+      }
+    } catch (error) {
+      toast.error("Error fetching OpenAI configuration.");
+    }
+  };
+
+  // Handle file upload
   const handleFileUpload = async (file) => {
     if (!file) return;
 
@@ -63,7 +81,9 @@ function KnowledgeBase() {
 
   const handleDragOver = (event) => {
     event.preventDefault();
-    setDragging(true);
+    if (openAIConfigured) {
+      setDragging(true);
+    }
   };
 
   const handleDragLeave = () => {
@@ -72,16 +92,25 @@ function KnowledgeBase() {
 
   const handleDrop = (event) => {
     event.preventDefault();
-    setDragging(false);
-    const droppedFile = event.dataTransfer.files[0];
-    handleFileUpload(droppedFile);
+    if (openAIConfigured) {
+      setDragging(false);
+      const droppedFile = event.dataTransfer.files[0];
+      handleFileUpload(droppedFile);
+    }
+  };
+
+  // Handle OpenAI key configuration (triggered after OpenAI key is set)
+  const handleOpenAIKeyConfigured = () => {
+    setOpenAIConfigured(true);
+    setShowModal(false); // Close modal once OpenAI key is configured
+    navigate('/configuration'); // Redirect to the Configuration page
   };
 
   return (
     <div>
       <MainNavBar />
       <motion.div
-        className='knowledgebase'
+        className={`knowledgebase ${openAIConfigured ? '' : 'blurred'}`} // Apply blur effect if OpenAI key is not configured
         initial={{ opacity: 0, y: 50, filter: 'blur(10px)' }}
         animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
         transition={{ duration: 0.2 }}
@@ -91,7 +120,7 @@ function KnowledgeBase() {
 
           {/* File Upload Section with Drag & Drop */}
           <div
-            className={`upload ${dragging ? 'dragging' : ''}`}
+            className={`upload ${dragging ? 'dragging' : ''} ${openAIConfigured ? '' : 'disabled'}`} // Disable upload if OpenAI key is missing
             onDragOver={handleDragOver}
             onDragLeave={handleDragLeave}
             onDrop={handleDrop}
@@ -101,6 +130,7 @@ function KnowledgeBase() {
                 type='file'
                 onChange={(e) => handleFileUpload(e.target.files[0])}
                 style={{ display: 'none' }}
+                disabled={!openAIConfigured} // Disable the file input if OpenAI key is missing
               />
               <div><i className="icon_ bi bi-file-earmark-arrow-up"></i></div>
               <div className='model_title mtop'>Click here or drag a file to upload</div>
@@ -143,6 +173,17 @@ function KnowledgeBase() {
           </div>
         </div>
       </motion.div>
+
+      {/* Modal Prompt to Configure OpenAI Key */}
+      {showModal && (
+        <div className='modal-overlay'>
+          <div className='modal'>
+            <h3>Configure OpenAI Key</h3>
+            <p>To start using the knowledge base, please configure your OpenAI API key.</p>
+            <button onClick={handleOpenAIKeyConfigured}>Not at configured, Now configure</button>
+          </div>
+        </div>
+      )}
 
       <ToastContainer />
     </div>

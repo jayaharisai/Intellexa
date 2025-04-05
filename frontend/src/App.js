@@ -5,6 +5,7 @@ import Register from "./components/Register";
 import KnowledgeBase from "./components/KnowledgeBase";
 import Chat from "./components/Chat";
 import Configuration from "./components/Configuration";
+import Monitoring from "./components/Monitoring";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <Route path="/knowledgebase" element={<KnowledgeBase/>}/>
         <Route path="/configuration" element={<Configuration/>}/>
         <Route path="/chat" element={<Chat/>}/>
+        <Route path="/monitoring" element={<Monitoring/>}/>
       </Routes>
     </BrowserRouter>
   );

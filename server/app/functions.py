@@ -2,6 +2,7 @@ import json
 import re
 import jwt
 import datetime
+import os
 
 def read_json_file(file_path):
     """
@@ -52,3 +53,33 @@ def decode_jwt_token(token, secret, algorithms=['HS256']):
     except jwt.InvalidTokenError:
         print("Invalid token")
     return None
+
+
+
+def read_upload_file_db(file_path: str):
+    import os
+    import json
+    if os.path.exists(file_path):
+        with open(file_path, "r") as f:
+            return json.load(f)
+    return {}
+
+# Function to write the updated data back to the upload files JSON
+def write_upload_file_db(file_path: str, data: dict):
+    import json
+    with open(file_path, "w") as f:
+        json.dump(data, f, indent=4)
+
+
+
+def flatten_2d_list(two_d_list):
+    """Flattens a 2D list into a 1D list."""
+    return [item for sublist in two_d_list for item in sublist]
+
+def remove_domain(email):
+    """Removes the domain from an email address."""
+    return email.split('@')[0]
+
+
+def set_environment_credentials(api_key: str):
+    os.environ["OPENAI_API_KEY"] = api_key

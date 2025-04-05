@@ -1,10 +1,14 @@
 from openai import OpenAI
 
-client = OpenAI()
+# try:
+#     client = OpenAI()
+# except:
+#     pass
 
 
 
 def convert_vector(text: str):
+    client = OpenAI()
     response = client.embeddings.create(
         input=text,
         model="text-embedding-3-small"

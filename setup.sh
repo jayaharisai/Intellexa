@@ -99,9 +99,26 @@ start_qdrant() {
     fi
 }
 
+build_frontend_image() {
+    FRONTEND_PATH="./frontend"
+    
+    echo "🔧 Building Docker image for frontend..."
+
+    if [ -d "$FRONTEND_PATH" ]; then
+        cd "$FRONTEND_PATH"
+        docker build -t frontend .
+        cd - > /dev/null
+        echo "✅ Frontend Docker image built successfully!"
+    else
+        echo "❌ Frontend directory not found at $FRONTEND_PATH"
+        exit 1
+    fi
+}
+
 # Run system update, install Docker, run server setup, then continue with remaining setup
 update_system
 install_docker
 run_server_setup   # Waits for server/setup.sh to finish before proceeding
 install_docker_compose
 start_qdrant
+build_frontend_image

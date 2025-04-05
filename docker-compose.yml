@@ -21,3 +21,12 @@ services:
       - "8000:8000"
     depends_on:
       - qdrant
+
+  frontend:
+    image: frontend
+    container_name: frontend_ui
+    restart: always
+    ports:
+      - "8080:80"
+    depends_on:
+      - server

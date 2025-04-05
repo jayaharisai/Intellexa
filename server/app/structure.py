@@ -12,3 +12,8 @@ class LoginDetails(BaseModel):
 
 class UploadRequest(BaseModel):
     token: str
+
+class Configuration(BaseModel):
+    openai_key: str
+    embedding_model: str
+    retrival_model: str

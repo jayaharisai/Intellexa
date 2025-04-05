@@ -10,7 +10,7 @@ def create_collection(collection_name: str):
     try:
         client.create_collection(
             collection_name=collection_name,
-            vectors_config=VectorParams(size=1536, distance=Distance.DOT),
+            vectors_config=VectorParams(size=1536, distance=Distance.COSINE),
         )
         print(f"successfully created embeddings with this name {collection_name}.")
     except:
@@ -39,3 +39,14 @@ def similarity_search(embeddings: list, collection_name: str, question: str):
             limit=3
         ).points
     return search_result
+
+
+def similarity_search_answer(embeddings: list, collection_name: str, question: str):
+    search_result = client.query_points(
+            collection_name=collection_name,
+            query=embeddings,
+            with_payload=True,
+            limit=1
+        ).points
+    return search_result
+

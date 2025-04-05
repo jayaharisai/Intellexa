@@ -30,6 +30,11 @@ function MainNavBar() {
               Chat
             </NavLink>
           </li>
+          {/* <li>
+            <NavLink to="/monitoring" className={({ isActive }) => isActive ? 'active' : ''}>
+              Monitoring
+            </NavLink>
+          </li> */}
         </ul>
         <div className='logout'><i className="bi bi-box-arrow-right"></i> Logout</div>
       </div>
